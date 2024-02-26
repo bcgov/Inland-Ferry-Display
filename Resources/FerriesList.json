@@ -1,0 +1,174 @@
+{
+  "AdamsLakeCableFerry": {
+    "name": "Adams Lake Cable Ferry",
+    "regionUrl": "https://images.drivebc.ca/webcam/api/v1/regions/Southern+Interior/webcams",
+    "spots": [
+      {
+        "id": 1102,
+        "name": "Adams Lake West Ferry Lineup"
+      },
+      {
+        "id": 1095,
+        "name": "Adams Lake West Ferry Landing"
+      },
+      {
+        "id": 1094,
+        "name": "Adams Lake East Ferry Landing"
+      }
+    ]
+  },
+  "ArrowParkCableFerry": {
+    "name": "Arrow Park Cable Ferry",
+    "regionUrl": "https://images.drivebc.ca/webcam/api/v1/regions/Southern+Interior/webcams",
+    "spots": [
+      {
+        "id": 1049,
+        "name": "Arrow Park Ferry North Terminal"
+      },
+      {
+        "id": 1048,
+        "name": "Arrow Pary Ferry South Terminal - N"
+      },
+      {
+        "id": 1050,
+        "name": "Arrow park Ferry South Terminal - S"
+      }
+    ]
+  },
+  "BarnstonIslandFerry": {
+    "name": "Barnston Island Ferry",
+    "regionUrl": "https://images.drivebc.ca/webcam/api/v1/regions/Lower+Mainland/webcams",
+    "spots": [
+      {
+        "id": 983,
+        "name": "Barnston Island - N"
+      },
+      {
+        "id": 984,
+        "name": "Barnston Island - W"
+      },
+      {
+        "id": 986,
+        "name": "Port Kells - E"
+      },
+      {
+        "id": 985,
+        "name": "Port Kells - W"
+      }
+    ]
+  },
+  "FrancoisLakeFerry": {
+    "name": "Francois Lake Ferry",
+    "regionUrl": "https://images.drivebc.ca/webcam/api/v1/regions/Northern/webcams",
+    "spots": [
+      {
+        "id": 140,
+        "name": "Francois Lake Southbank Ferry Landing"
+      },
+      {
+        "id": 1083,
+        "name": "Francois Lake Northbank Ferry Landing"
+      }
+    ]
+  },
+  "HarropCableFerry": {
+    "name": "Harrop Cable Ferry",
+    "regionUrl": "https://images.drivebc.ca/webcam/api/v1/regions/Southern+Interior/webcams",
+    "spots": [
+      {
+        "id": 569,
+        "name": "Harrop Ferry Landing"
+      },
+      {
+        "id": 567,
+        "name": "Harrop Ferry Landing North View"
+      },
+      {
+        "id": 570,
+        "name": "Harrop Ferry Landing South View"
+      }
+    ]
+  },
+  "KootenayLakeFerry": {
+    "name": "Kootenay Lake Ferry",
+    "regionUrl": "https://images.drivebc.ca/webcam/api/v1/regions/Southern+Interior/webcams",
+    "spots": [
+      {
+        "id": 304,
+        "name": "Kootenay Bay Ferry Landing"
+      },
+      {
+        "id": 1031,
+        "name": "Kootenay Bay Ferry Ramp"
+      },
+      {
+        "id": 303,
+        "name": "Balfour Ferry Terminal"
+      },
+      {
+        "id": 1030,
+        "name": "Balfour Ferry Ramp"
+      }
+    ]
+  },
+  "NeedlesCableFerry": {
+    "name": "Needles Cable Ferry",
+    "regionUrl": "https://images.drivebc.ca/webcam/api/v1/regions/Southern+Interior/webcams",
+    "spots": [
+      {
+        "id": 860,
+        "name": "Needles Ferry Front - E"
+      },
+      {
+        "id": 442,
+        "name": "Needles Ferry Front - W"
+      },
+      {
+        "id": 1027,
+        "name": "Needles Ferry Rest spots"
+      },
+      {
+        "id": 1043,
+        "name": "Needles Ferry Bend Middle"
+      },
+      {
+        "id": 1028,
+        "name": "Needles Ferry Bend End"
+      },
+      {
+        "id": 861,
+        "name": "Fauquier Ferry - W"
+      },
+      {
+        "id": 443,
+        "name": "Fauquier Ferry - E"
+      }
+    ]
+  },
+  "UpperArrowLakeFerry": {
+    "name": "Upper Arrow Lake Ferry",
+    "regionUrl": "https://images.drivebc.ca/webcam/api/v1/regions/Southern+Interior/webcams",
+    "spots": [
+      {
+        "id": 188,
+        "name": "Shelter Bay - Front"
+      },
+      {
+        "id": 518,
+        "name": "Shelter Bay - Middle"
+      },
+      {
+        "id": 969,
+        "name": "Galena Bay Landing - Front"
+      },
+      {
+        "id": 481,
+        "name": "Galena Bay Land - End"
+      },
+      {
+        "id": 482,
+        "name": "Galena Bay Landing - Middle"
+      }
+    ]
+  }
+}
