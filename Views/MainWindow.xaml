@@ -7,12 +7,10 @@
         <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" HorizontalAlignment="Left"
             Margin="10">
             <ComboBox x:Name="DisplaySelectionComboBox" Width="200" Margin="0,0,10,0" />
-            <ComboBox x:Name="DisplayModeComboBox" Width="150" Margin="0,0,10,0">
-                <ComboBoxItem Content="Grid" />
-                <ComboBoxItem Content="Rotate" />
-            </ComboBox>
-            <Button x:Name="ProjectButton" Content="Project Multiple Images"
+            <ComboBox x:Name="DisplayModeComboBox" Width="150" Margin="0,0,10,0" />
+            <Button x:Name="ProjectButton" Content="Project Images"
                 Click="ProjectButton_Click" Margin="0,0,10,0" Padding="10,0" />
+            <Button Content="Close Projections" Click="CloseProjections_Click" />
         </StackPanel>
 
         <!-- Main Content Area -->
