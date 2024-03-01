@@ -28,7 +28,7 @@ namespace FerryDisplayApp.Views
         {
             InitializeComponent();
             LoadFerriesData();
-            _projectionService = new ProjectionService();
+            _projectionService = ProjectionService.Instance;
             DisplaySelectionComboBox.ItemsSource = Screen.AllScreens.Select(screen => screen.DeviceName).ToList();
             DisplayModeComboBox.ItemsSource = Enum.GetValues(typeof(ProjectionMode));
         }
@@ -84,22 +84,25 @@ namespace FerryDisplayApp.Views
         {
             try
             {
-                using (var response = await httpClient.GetStreamAsync(imageUrl))
-                {
-                    var bitmapImage = new BitmapImage();
-                    bitmapImage.BeginInit();
-                    bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                    bitmapImage.StreamSource = response;
-                    bitmapImage.EndInit();
-                    // bitmapImage.Freeze(); // immutability and thread-safe
-                    SpotImage.Source = bitmapImage;
-                }
+                var imageStream = await httpClient.GetStreamAsync(imageUrl);
+                var bitmapImage = new BitmapImage();
+                bitmapImage.BeginInit();
+                bitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                bitmapImage.StreamSource = imageStream;
+                bitmapImage.EndInit();
+                SpotImage.Source = bitmapImage;
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show($"Failed to load image: {ex.Message}");
             }
         }
+
+        private void SelectAll_Click(object sender, RoutedEventArgs e)
+        {
+            ImageList.SelectAll();
+        }
+
 
         private void ProjectButton_Click(object sender, RoutedEventArgs e)
         {
@@ -126,30 +129,12 @@ namespace FerryDisplayApp.Views
             ProjectionMode selectedMode = (ProjectionMode)DisplayModeComboBox.SelectedItem;
             Screen selectedScreen = Screen.AllScreens[selectedDisplayIndex];
 
-            var projectionService = new ProjectionService();
-
-            projectionService.StartProjection(selectedSpots, selectedScreen, selectedMode);
+            _projectionService.StartProjection(selectedSpots, selectedScreen, selectedMode);
         }
 
         private void CloseProjections_Click(object sender, RoutedEventArgs e)
         {
             _projectionService.StopProjection();
         }
-
-        private System.Windows.Controls.Image CreateBoundImageControl(Spot spot)
-        {
-            var image = new System.Windows.Controls.Image();
-
-            var binding = new System.Windows.Data.Binding("ImageSource")
-            {
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-                Source = spot // Set the source of the binding to the spot object
-            };
-
-            image.SetBinding(System.Windows.Controls.Image.SourceProperty, binding);
-            return image;
-        }
-
     }
 }
