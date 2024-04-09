@@ -7,5 +7,11 @@ namespace FerryImageDisplayApp
     /// </summary>
     public partial class App : Application
     {
+        // In App.xaml.cs
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+        }
+
     }
 }
