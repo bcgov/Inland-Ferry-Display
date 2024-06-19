@@ -17,17 +17,24 @@ namespace FerryDisplayApp.Services
         public static Window CreateProjectionWindow(Screen screen)
         {
             var (scaleX, scaleY) = GetDpiScaling();
-            return new Window
+            var window = new Window
             {
                 WindowStartupLocation = WindowStartupLocation.Manual,
                 WindowStyle = WindowStyle.None,
-                WindowState = WindowState.Maximized,
-                Width = screen.Bounds.Width / scaleX,
-                Height = screen.Bounds.Height / scaleY,
-                Left = screen.Bounds.X / scaleX,
-                Top = screen.Bounds.Y / scaleY,
+                Width = screen.Bounds.Width / scaleX, // Use entire screen bounds for width
+                Height = screen.Bounds.Height / scaleY, // Use entire screen bounds for height
+                Left = screen.Bounds.X, // Use absolute X from bounds
+                Top = screen.Bounds.Y, // Use absolute Y from bounds
                 ResizeMode = ResizeMode.NoResize
             };
+
+            // This ensures the window is moved to the correct screen first
+            window.WindowState = WindowState.Normal;
+            window.Show();
+
+            // Then maximize the window to fill the screen
+            window.WindowState = WindowState.Maximized;
+            return window;
         }
 
         public static void HandleModeDisplay(Window currentWindow, ProjectionMode currentMode, List<Spot> spots, ref int currentImageIndex, DispatcherTimer rotationTimer)
@@ -74,7 +81,9 @@ namespace FerryDisplayApp.Services
             }
             else
             {
-                foreach (var win in projectionWindows)
+                // Create a copy of the list for iteration
+                var windowsToClose = new List<Window>(projectionWindows);
+                foreach (var win in windowsToClose)
                 {
                     win.Close();
                 }
@@ -88,13 +97,29 @@ namespace FerryDisplayApp.Services
             }
         }
 
-        private static void DisplayCurrentImage(Window currentWindow, List<Spot> spots, int currentImageIndex)
+        private static async void DisplayCurrentImage(Window currentWindow, List<Spot> spots, int currentImageIndex)
         {
             var spot = spots[currentImageIndex];
-            currentWindow.Content = CreateBoundImageControl(spot);
+            await spot.FetchImageDataAsync();
+            var image = CreateBoundImageControl(spot);
+
+            var (scaleX, scaleY) = GetDpiScaling();
+            image.Width *= scaleX;
+            image.Height *= scaleY;
+
+            var container = new Grid();
+            container.Children.Add(image);
+
+            var textBlock = CreateOverlayTextBlock(spot.Name, spot.LastModifiedTime, currentWindow.Width, currentWindow.Height);
+            container.Children.Add(textBlock);
+
+            Grid.SetRow(image, 0);
+            Grid.SetRow(textBlock, 1);
+
+            currentWindow.Content = container;
         }
 
-        private static void InitializeUniformGrid(Window currentWindow, List<Spot> spots)
+        private static async void InitializeUniformGrid(Window currentWindow, List<Spot> spots)
         {
             var uniformGrid = new UniformGrid
             {
@@ -104,8 +129,9 @@ namespace FerryDisplayApp.Services
 
             foreach (var spot in spots)
             {
+                await spot.FetchImageDataAsync();
                 var image = CreateBoundImageControl(spot);
-                var textBlock = CreateOverlayTextBlock(spot.Name);
+                var textBlock = CreateOverlayTextBlock(spot.Name, spot.LastModifiedTime, currentWindow.Width / uniformGrid.Columns, currentWindow.Height / uniformGrid.Rows);
                 var container = new Grid();
 
                 container.Children.Add(image);
@@ -132,18 +158,30 @@ namespace FerryDisplayApp.Services
             return image;
         }
 
-        private static TextBlock CreateOverlayTextBlock(string text)
+        private static TextBlock CreateOverlayTextBlock(string text, string timestamp, double containerWidth, double containerHeight)
         {
+            double fontSize = CalculateFontSize(containerWidth, containerHeight);
+
             return new TextBlock
             {
-                Text = text,
+                Text = $"{text} {timestamp}",
                 Foreground = Brushes.White,
                 Background = new SolidColorBrush(Colors.Black) { Opacity = 0.5 },
-                TextAlignment = TextAlignment.Center,
+                TextAlignment = TextAlignment.Left,
                 VerticalAlignment = VerticalAlignment.Bottom,
-                HorizontalAlignment = System.Windows.HorizontalAlignment.Center,
-                Margin = new Thickness(0, 0, 0, 20)
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Left,
+                Margin = new Thickness(10, 0, 0, 10),
+                FontSize = fontSize
             };
+        }
+
+        private static double CalculateFontSize(double width, double height)
+        {
+            double baseFontSize = 16; // Base font size for a standard container size
+            double sizeFactor = Math.Sqrt(width * height) / 400; // Scale factor based on container size
+            double calculatedFontSize = baseFontSize * sizeFactor;
+
+            return Math.Max(calculatedFontSize, 12); // Ensure a minimum font size of 12
         }
     }
 }

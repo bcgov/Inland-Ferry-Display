@@ -31,7 +31,7 @@ namespace FerryDisplayApp.Helpers
             if (!File.Exists(jsonFilePath))
             {
                 var assembly = Assembly.GetExecutingAssembly();
-                var resourceName = "FerryImageDisplayApp.Resources.FerriesListTest.json";
+                var resourceName = "FerryImageDisplayApp.Resources.FerriesList.json";
 
                 using (Stream stream = assembly.GetManifestResourceStream(resourceName))
                 using (StreamReader reader = new StreamReader(stream))

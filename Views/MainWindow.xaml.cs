@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Interop;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace FerryDisplayApp.Views
@@ -27,12 +28,27 @@ namespace FerryDisplayApp.Views
             InitializeComponent();
             LoadFerriesData();
             SetupDisplaySelection();
+            this.Loaded += MainWindow_Loaded;
         }
 
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            this.Arrange(new Rect(0, 0, this.DesiredSize.Width, this.DesiredSize.Height));
+
+            this.MinWidth = this.DesiredSize.Width;
+            this.MinHeight = this.DesiredSize.Height;
+        }
         private void SetupDisplaySelection()
         {
             DisplaySelectionComboBox.ItemsSource = Screen.AllScreens.Select(screen => screen.DeviceName).ToList();
             DisplayModeComboBox.ItemsSource = Enum.GetValues(typeof(ProjectionMode));
+        }
+
+        private void RefreshDisplays_Click(object sender, RoutedEventArgs e)
+        {
+            SetupDisplaySelection();
+            System.Windows.MessageBox.Show("Display list refreshed.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         protected override void OnSourceInitialized(EventArgs e)
@@ -85,6 +101,7 @@ namespace FerryDisplayApp.Views
                 bitmapImage.StreamSource = imageStream;
                 bitmapImage.EndInit();
                 SpotImage.Source = bitmapImage;
+                SpotImage.Stretch = Stretch.Uniform;
             }
             catch (Exception ex)
             {
@@ -136,8 +153,19 @@ namespace FerryDisplayApp.Views
         private void ManageFerries_Click(object sender, RoutedEventArgs e)
         {
             var manageWindow = new ManageFerriesWindow();
+            manageWindow.FerriesUpdated += ManageWindow_FerriesUpdated;
             manageWindow.ShowDialog();
         }
 
+        private void ManageWindow_FerriesUpdated(object sender, EventArgs e)
+        {
+            LoadFerriesData(); // Reload the data when the event is triggered
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.ShowDialog();
+        }
     }
 }

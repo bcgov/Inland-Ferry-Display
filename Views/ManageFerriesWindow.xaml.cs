@@ -11,7 +11,8 @@ namespace FerryDisplayApp.Views
 {
     public partial class ManageFerriesWindow : Window
     {
-        private const string JsonFilePath = "C:/Users/isean/Projects/FerryImageDisplayApp/FerryImageDisplayApp/Resources/FerriesListTest.json";
+        public event EventHandler FerriesUpdated;
+        private const string JsonFilePath = "C:/Users/isean/Projects/FerryImageDisplayApp/FerryImageDisplayApp/Resources/FerriesList.json";
         private Dictionary<string, Ferry> _ferries;
         public ObservableCollection<Ferry> Ferries { get; set; } = new ObservableCollection<Ferry>(); // to be accessed by UI
 
@@ -26,6 +27,7 @@ namespace FerryDisplayApp.Views
         {
             LoadFerries();
         }
+
 
         private void LoadFerries()
         {
@@ -65,6 +67,8 @@ namespace FerryDisplayApp.Views
                 var options = new JsonSerializerOptions { WriteIndented = true };
                 var jsonString = JsonSerializer.Serialize(Ferries.ToList(), options);
                 JsonFileHelper.WriteJsonFile(jsonString);
+
+                FerriesUpdated?.Invoke(this, EventArgs.Empty);
 
                 MessageBox.Show("Changes saved successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }

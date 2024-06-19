@@ -1,0 +1,28 @@
+<Window x:Class="FerryDisplayApp.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings" Height="300" Width="400"
+        Background="#F2F2F2">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock Text="Settings" FontSize="20" Margin="10" HorizontalAlignment="Center" />
+        
+        <StackPanel Grid.Row="1" Margin="20">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Rotation Timer (seconds):" VerticalAlignment="Center"/>
+                <TextBox x:Name="RotationTimerTextBox" Width="100" Margin="5"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Refresh Rate (minutes):" VerticalAlignment="Center"/>
+                <TextBox x:Name="RefreshRateTextBox" Width="100" Margin="5"/>
+            </StackPanel>
+
+            <Button Content="Save" Width="100" Margin="10" HorizontalAlignment="Right" Click="SaveButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

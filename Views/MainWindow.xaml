@@ -50,9 +50,11 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                 <Button Content="Select All" Click="SelectAll_Click"/>
                 <ComboBox x:Name="DisplaySelectionComboBox" Width="200"/>
+                <Button Content="⟳" ToolTip="Refresh Displays" Click="RefreshDisplays_Click" Width="30" Height="30" />
                 <ComboBox x:Name="DisplayModeComboBox" Width="150"/>
                 <Button x:Name="ProjectButton" Content="Project Images" Click="ProjectButton_Click"/>
                 <Button Content="Manage Ferries" Click="ManageFerries_Click" Style="{StaticResource LinkButtonStyle}" />
+                <Button Content="⚙ Settings" Click="SettingsButton_Click" />
             </StackPanel>
 
             <!-- Isolated Close Projections Button -->
@@ -74,7 +76,7 @@
             <!-- Preview Image -->
             <Border Grid.Column="1" Margin="10" Background="LightGray" BorderBrush="Black"
                     BorderThickness="1">
-                <Image x:Name="SpotImage" Stretch="UniformToFill" />
+                <Image x:Name="SpotImage" Stretch="Uniform" />
             </Border>
         </Grid>
     </DockPanel>
